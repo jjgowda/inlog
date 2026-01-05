@@ -1,8 +1,4 @@
 
-
-# 📄 `README.md` — **INLOG Authentication Service**
-
-```md
 # INLOG 🔐  
 A modern authentication service with a clean UI, JSON-based APIs, and secure cookie-based sessions.
 
