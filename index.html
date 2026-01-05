@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo App – Powered by INLOG</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ---------- HEADER ---------- */
+        .header {
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #202124;
+        }
+
+        .login-btn {
+            background: #1a73e8;
+            color: #ffffff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(26,115,232,0.25);
+        }
+
+        .login-btn:hover {
+            background: #1765cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26,115,232,0.35);
+        }
+
+        .logout-btn {
+            background: #e53935;
+            margin-left: 12px;
+        }
+
+        /* ---------- CONTENT ---------- */
+        .container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 40px;
+        }
+
+        .hero {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 50px 45px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 18px;
+            color: #202124;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: #5f6368;
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        /* ---------- PROFILE ---------- */
+        .profile-card {
+            background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+            color: #ffffff;
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(26,115,232,0.3);
+            margin-bottom: 30px;
+        }
+
+        .profile-card h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            background: rgba(255,255,255,0.12);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .profile-row {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .profile-value {
+            opacity: 0.95;
+        }
+
+        .not-logged-in {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            margin-bottom: 30px;
+        }
+
+        .powered-by {
+            margin-top: 35px;
+            padding-top: 28px;
+            border-top: 1px solid #e8eaed;
+            color: #5f6368;
+            font-size: 14px;
+        }
+
+        .powered-by strong {
+            color: #1a73e8;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="site-title">Demo Application</div>
+    <div id="auth-actions"></div>
+</header>
+
+<div class="container">
+
+    <div id="user-profile"></div>
+
+    <div class="hero">
+        <h1>Welcome to Our Platform</h1>
+        <p>
+            This is a demo website showcasing modern authentication powered by <strong>INLOG</strong>.
+        </p>
+        <p>
+            The entire login flow uses JSON APIs and secure client-side state handling,
+            similar to real-world SSO providers.
+        </p>
+
+        <div class="powered-by">
+            Authentication powered by <strong>INLOG</strong>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const profileDiv = document.getElementById("user-profile");
+const authActions = document.getElementById("auth-actions");
+
+fetch("/api/me")
+  .then(res => {
+    if (!res.ok) throw new Error();
+    return res.json();
+  })
+  .then(user => {
+    authActions.innerHTML = `
+      <button class="login-btn logout-btn" onclick="logout()">Logout</button>
+    `;
+
+    profileDiv.innerHTML = `
+      <div class="profile-card">
+        <h2>✓ User Profile</h2>
+        <div class="profile-info">
+          <div class="profile-row">
+            <div class="profile-label">Status</div>
+            <div class="profile-value">Signed in via INLOG</div>
+          </div>
+          <div class="profile-row">
+            <div class="profile-label">Email</div>
+            <div class="profile-value">${user.email}</div>
+          </div>
+          <div class="profile-row">
+            <div class="profile-label">User ID</div>
+            <div class="profile-value">${user.user_id}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  })
+  .catch(() => {
+    authActions.innerHTML = `
+      <button class="login-btn" onclick="window.location.href='/auth'">
+        Login with INLOG
+      </button>
+    `;
+  });
+
+function logout() {
+  fetch("/api/logout", { method: "POST" })
+    .then(() => window.location.reload());
+}
+</script>
+
+
+</body>
+</html>
