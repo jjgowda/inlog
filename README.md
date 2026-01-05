@@ -233,4 +233,58 @@ def add_user(email: str, password: str):
     users.append(user)
     return user
 ```
+## 🚀 Future Updates & Roadmap
+
+INLOG is designed to be extended incrementally. The following features are planned for future releases:
+
+### 🔐 Security Enhancements
+- [ ] Password hashing using **bcrypt**
+- [ ] CSRF protection for cookie-based authentication
+- [ ] Secure cookie flags (`Secure`, `SameSite=Strict`) for production
+- [ ] Rate limiting on auth endpoints
+- [ ] Account lockout after repeated failed logins
+
+### 📧 Email & Account Management
+- [ ] SMTP integration (Zoho Mail / custom domain)
+- [ ] Email verification after registration
+- [ ] Login notification emails
+- [ ] Forgot password & reset password flow
+- [ ] Change email & change password functionality
+
+### 👤 User & Session Management
+- [ ] Persistent database storage (PostgreSQL / MySQL)
+- [ ] User roles (admin / user)
+- [ ] Session expiry & refresh tokens
+- [ ] Active session management
+- [ ] Logout from all devices
+
+### 🌐 OAuth & SSO
+- [ ] OAuth 2.0 support
+- [ ] Login with Google / GitHub
+- [ ] INLOG as a third-party SSO provider
+- [ ] Multi-tenant authentication support
+
+### 🧱 Platform & Infrastructure
+- [ ] Docker support
+- [ ] Environment-based configuration
+- [ ] Production deployment (Render / Railway / VPS)
+- [ ] HTTPS & domain configuration
+- [ ] Reverse proxy setup (Nginx)
+
+### 🎨 Frontend Improvements
+- [ ] User dashboard
+- [ ] Profile management UI
+- [ ] Error handling & toast notifications
+- [ ] Accessibility improvements
+- [ ] Dark mode
+
+### 📊 Observability & Maintenance
+- [ ] Structured logging
+- [ ] Audit logs for authentication events
+- [ ] Metrics & monitoring
+- [ ] Automated tests (unit & integration)
+
+---
+
+> This roadmap is iterative. Features will be implemented with a strong focus on security, simplicity, and scalability.
 
